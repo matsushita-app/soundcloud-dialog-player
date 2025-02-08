@@ -1,0 +1,34 @@
+{
+  "tasks": {
+    "hello": "echo hello!",
+    "build": "rm -rf ./dist/ && cp -r ./public ./dist && deno run -A bundle.ts ./src/core/content.ts ./dist/content.js && deno run -A bundle.ts ./src/core/background.ts ./dist/background.js"
+  },
+  "fmt": {
+    "files": {
+      "include": [
+        "src/"
+      ],
+      "exclude": [
+        "src/testdata/"
+      ]
+    },
+    "options": {
+      "useTabs": false,
+      "lineWidth": 80,
+      "indentWidth": 2,
+      "singleQuote": true,
+      "proseWrap": "preserve"
+    }
+  },
+  "compilerOptions": {
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "dom.asynciterable",
+      "deno.ns"
+    ],
+    "types": [
+      "https://unpkg.com/chrome-types@0.1.153/index.d.ts"
+    ]
+  }
+}

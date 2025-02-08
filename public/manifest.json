@@ -1,0 +1,21 @@
+{
+  "name": "SoundCloud Dialog Player",
+  "description": "",
+  "version": "0.1",
+  "manifest_version": 3,
+  "action": {},
+  "permissions": [],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "js": [
+        "content.js"
+      ],
+      "matches": [
+        "https://soundcloud.com/*"
+      ]
+    }
+  ]
+}
