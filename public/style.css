@@ -1,3 +1,7 @@
+:root {
+    --ease-out-back: cubic-bezier(0.18, 0.89, 0.32, 1.28);
+}
+
 #scdp {
     border-style: none;
     background-color: transparent;
@@ -18,11 +22,39 @@
         font-size: 3rem;
         font-weight: bold;
 
-        & > img.thumbnail {
-            border-radius: 16px;
-            margin-bottom: 32px;
+        & > .thumbnail-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
             width: 500px;
             height: 500px;
+            margin-bottom: 32px;
+
+            & > button {
+                border: none;
+                padding: 0;
+                background-color: transparent;
+
+                & > img.thumbnail {
+                    border-radius: 16px;
+                    transition:
+                        width 0.3s var(--ease-out-back),
+                        height 0.3s var(--ease-out-back),
+                        box-shadow 0.3s var(--ease-out-back);
+    
+                    &.large {
+                        width: 500px;
+                        height: 500px;
+                        box-shadow: rgba(0, 0, 0, 0.8) 0px 20px 100px -20px;
+                    }
+    
+                    &.small {
+                        width: 400px;
+                        height: 400px;
+                        box-shadow: rgba(0, 0, 0, 0.8) 0px 20px 100px -60px;
+                    }
+                }
+            }
         }
 
         & > .title {
