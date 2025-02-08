@@ -10,6 +10,7 @@ export default () => {
   const dialog = new Dialog('scdp');
   dialog.setChild(`
     <div class="container">
+      <img class="thumbnail" draggable="false" />
       <p class="title">トラック名</p>
       <p class="artist">アーティスト名</p>
     </div>
@@ -42,7 +43,16 @@ const getTrackInfo = (): TrackInfo => {
       '.playbackSoundBadge__titleContextContainer a.playbackSoundBadge__lightLink',
     )!
     .textContent!;
-  return { title, artist };
+  const style = badge
+    .querySelector<HTMLElement>(
+      'a.playbackSoundBadge__avatar span',
+    )!
+    .getAttribute('style')!;
+  const thumbnailSrc = style
+    .match(/url\("(.*?)"\)/)![1]
+    .replace(/50x50/, '500x500')
+    .replace(/120x120/, '1080x1080');
+  return { title, artist, thumbnailSrc };
 };
 
 /**
@@ -67,4 +77,7 @@ const updateDialogWithTrackInfo = (dialog: HTMLElement, info: TrackInfo) => {
 
   const artistEl = dialog.querySelector('#scdp .artist')!;
   artistEl.textContent = info.artist;
+
+  const thumbnailEl = dialog.querySelector('#scdp img.thumbnail')!;
+  thumbnailEl.setAttribute('src', info.thumbnailSrc);
 };

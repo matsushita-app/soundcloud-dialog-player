@@ -18,6 +18,13 @@
         font-size: 3rem;
         font-weight: bold;
 
+        & > img.thumbnail {
+            border-radius: 16px;
+            margin-bottom: 32px;
+            width: 500px;
+            height: 500px;
+        }
+
         & > .title {
             color: rgb(255 255 255 / 75%);
         }
