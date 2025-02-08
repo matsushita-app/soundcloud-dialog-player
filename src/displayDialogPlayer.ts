@@ -10,7 +10,7 @@ export default () => {
   const dialog = new Dialog('scdp');
   dialog.setChild(`
     <div class="container">
-      <img class="thumbnail" />
+      <img class="thumbnail" draggable="false" />
       <p class="title">トラック名</p>
       <p class="artist">アーティスト名</p>
     </div>
