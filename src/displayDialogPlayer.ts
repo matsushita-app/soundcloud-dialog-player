@@ -48,7 +48,10 @@ const getTrackInfo = (): TrackInfo => {
       'a.playbackSoundBadge__avatar span',
     )!
     .getAttribute('style')!;
-  const thumbnailSrc = style.match(/url\("(.*?)"\)/)![1];
+  const thumbnailSrc = style
+    .match(/url\("(.*?)"\)/)![1]
+    .replace(/50x50/, '500x500')
+    .replace(/120x120/, '1080x1080');
   return { title, artist, thumbnailSrc };
 };
 
