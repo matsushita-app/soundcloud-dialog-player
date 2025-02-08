@@ -10,7 +10,11 @@ export default () => {
   const dialog = new Dialog('scdp');
   dialog.setChild(`
     <div class="container">
-      <img class="thumbnail" draggable="false" />
+      <div class="thumbnail-container">
+        <button>
+          <img class="thumbnail large" draggable="false" />
+        </button>
+      </div>
       <p class="title">トラック名</p>
       <p class="artist">アーティスト名</p>
     </div>
@@ -19,12 +23,16 @@ export default () => {
   const info = getTrackInfo();
   updateDialogWithTrackInfo(dialog.element, info);
 
+  togglePlayOnClickThumbnail();
+
   const trackInfoSourceObserver = updateDialogOnChangeTrack(dialog.element);
+  const playButtonObserver = updateDialogOnPlayOrPauseTrack(dialog.element);
 
   const closeButton = new CloseButton(dialog.element, 'close');
   closeButton.onClick(() => dialog.element.close());
   dialog.onClose(() => {
     trackInfoSourceObserver.disconnect();
+    playButtonObserver.disconnect();
   });
 };
 
@@ -53,6 +61,38 @@ const getTrackInfo = (): TrackInfo => {
     .replace(/50x50/, '500x500')
     .replace(/120x120/, '1080x1080');
   return { title, artist, thumbnailSrc };
+};
+
+/**
+ * サムネイルクリックで再生/一時停止
+ */
+const togglePlayOnClickThumbnail = () => {
+  const thumbnailButton = document.querySelector(
+    '#scdp .thumbnail-container button',
+  )!;
+  const playButton = document.querySelector<HTMLElement>(
+    '.playControls__elements button.playControls__play',
+  )!;
+  thumbnailButton.addEventListener('click', () => {
+    playButton.click();
+  });
+};
+
+/**
+ * トラックが再生/一時停止されたらダイアログを更新する
+ */
+const updateDialogOnPlayOrPauseTrack = (
+  dialog: HTMLElement,
+): MutationObserver => {
+  const playButton = document.querySelector<HTMLElement>(
+    '.playControls__elements button.playControls__play',
+  )!;
+  return observe(playButton, () => {
+    const isPlaying = playButton.classList.contains('playing');
+    const thumbnailEl = dialog.querySelector('#scdp img.thumbnail')!;
+    thumbnailEl.classList.add(isPlaying ? 'large' : 'small');
+    thumbnailEl.classList.remove(isPlaying ? 'small' : 'large');
+  });
 };
 
 /**
