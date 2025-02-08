@@ -15,6 +15,9 @@
       ],
       "matches": [
         "https://soundcloud.com/*"
+      ],
+      "css": [
+        "style.css"
       ]
     }
   ]
