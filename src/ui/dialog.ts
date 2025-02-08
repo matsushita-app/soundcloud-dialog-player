@@ -18,7 +18,6 @@ export default class {
 
   onClose(callback?: () => void) {
     this.element.addEventListener('close', () => {
-      this.element.remove();
       if (callback) callback();
     });
   }
